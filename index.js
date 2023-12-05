@@ -44,7 +44,7 @@ app.get("/", (req, res) => {
     if (err) {
       throw err;
     }
-    connection.query("SELECT * FROM beer", (err, rows) => {
+    connection.query("SELECT * FROM beers", (err, rows) => {
       connection.release();
       if (!err) {
         res.send(rows);
@@ -62,7 +62,7 @@ app.get("/:id", (req, res) => {
       throw err;
     }
     connection.query(
-      "SELECT * FROM beer WHERE id = ?",
+      "SELECT * FROM beers WHERE id = ?",
       [req.params.id],
       (err, rows) => {
         connection.release();
@@ -77,7 +77,6 @@ app.get("/:id", (req, res) => {
 });
 
 //delete data
-
 app.get("/deletedata/:id", (req, res) => {
   const id = req.params.id;
 
@@ -85,7 +84,7 @@ app.get("/deletedata/:id", (req, res) => {
     if (err) {
       throw err;
     }
-    connection.query("DELETE FROM beer WHERE id = ?", [id], (err, rows) => {
+    connection.query("DELETE FROM beers WHERE id = ?", [id], (err, rows) => {
       connection.release();
       if (!err) {
         res.send(`Colum with id ${id} deleted`);
@@ -97,7 +96,6 @@ app.get("/deletedata/:id", (req, res) => {
 });
 
 //Add Data
-
 app.post("/adddata", (req, res) => {
   const params = req.body;
 
@@ -105,7 +103,7 @@ app.post("/adddata", (req, res) => {
     if (err) {
       throw err;
     }
-    connection.query("INSERT INTO beer SET ?", params, (err, rows) => {
+    connection.query("INSERT INTO beers SET ?", params, (err, rows) => {
       connection.release();
       if (!err) {
         res.send(`${params.name} added`);
@@ -126,7 +124,7 @@ app.put("/update", (req, res) => {
       throw err;
     }
     connection.query(
-      "UPDATE beer SET description = ? WHERE id = ?",
+      "UPDATE beers SET description = ? WHERE id = ?",
       [description, id],
       (err, rows) => {
         connection.release();
